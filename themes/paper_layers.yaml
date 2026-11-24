@@ -1,0 +1,350 @@
+# Paper Layers: a cut-paper theme for Home Assistant, with light and dark mode in one theme.
+#
+# Every surface is a sheet of matte card stock, stacked in layers on a deep petrol board. Depth comes only from short,
+# real shadows between the layers, never from blur or glass. Mint-white cards, mustard and coral for warm states,
+# petrol for actions. Switched-on devices sit one layer higher than switched-off ones.
+#
+# Works without any add-on: card stock colours, the fine paper fibre (an embedded SVG, no image files), short layer
+# shadows, rounded sheets, paper switch thumbs and the rounded system font come from plain theme variables.
+# With card-mod 4.x installed (optional), the card-mod-* keys lift tiles of switched-on devices one layer higher,
+# turn their icon into a solid paper dot, float the sidebar as its own sheet and raise the selected sidebar entry.
+# Without card-mod those keys are ignored.
+#
+# Fonts: system fonts only, nothing is downloaded. Safari and the Apple apps use the rounded system font
+# (ui-rounded). Other browsers use the system UI font; with card-mod, section headings and the dashboard title use
+# Arial Rounded where it is installed.
+Paper Layers:
+  card-mod-theme: Paper Layers
+
+  # Theme-own variables, used below and by the card-mod rules
+  paper-layers-board: "#175b5b"
+  paper-layers-under: "#d9e7e0"
+  paper-layers-sheet: "#ecf5ed"
+  paper-layers-sheet-up: "#f2f9f3"
+  paper-layers-ink: "#113a3a"
+  paper-layers-mint: "#bbe2d3"
+  paper-layers-mustard: "#e7ac35"
+  paper-layers-coral: "#d86845"
+  # Glyph on the paper dot: ink on mustard and coral dots (light, media), paper on petrol dots
+  paper-layers-dot-glyph: "#113a3a"
+  paper-layers-dot-glyph-petrol: "#ecf5ed"
+  paper-layers-fibre: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter id=%27d%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 0 0 0 0 0 .12 0 0 0 0 .12 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Cfilter id=%27h%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23d)%27 opacity=%270.2%27/%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23h)%27 opacity=%270.3%27/%3E%3C/svg%3E")'
+  paper-layers-fibre-board: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter id=%27d%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 0 0 0 0 0 .12 0 0 0 0 .12 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Cfilter id=%27h%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23d)%27 opacity=%270.3%27/%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23h)%27 opacity=%270.4%27/%3E%3C/svg%3E")'
+  # Short, hard-edged shadows: one layer at rest, two layers when lifted
+  paper-layers-edge: "inset 0 1px 0 rgba(255,255,255,.55)"
+  paper-layers-shadow: "inset 0 1px 0 rgba(255,255,255,.55), 0 1px 0 rgba(3,32,32,.26), 0 2px 3px rgba(3,32,32,.26)"
+  paper-layers-shadow-up: "inset 0 1px 0 rgba(255,255,255,.65), 0 2px 0 rgba(3,32,32,.20), 0 4px 6px rgba(3,32,32,.30), 0 9px 14px -6px rgba(3,32,32,.32)"
+  paper-layers-numbers: "ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', Nunito, 'Varela Round', system-ui, sans-serif"
+
+  # Core colours: petrol for actions and selection
+  primary-color: "#106561"
+  accent-color: "#106561"
+  text-primary-color: "#ecf5ed"
+  primary-text-color: "#113a3a"
+  secondary-text-color: "#3d5f5f"
+  disabled-text-color: "#7f9494"
+  rgb-primary-text-color: "17, 58, 58"
+  ha-color-primary-05: "#021817"
+  ha-color-primary-10: "#022d2b"
+  ha-color-primary-20: "#043e3c"
+  ha-color-primary-30: "#0c534f"
+  ha-color-primary-40: "#106561"
+  ha-color-primary-50: "#2f8a85"
+  ha-color-primary-60: "#58b0aa"
+  ha-color-primary-70: "#75ccc7"
+  ha-color-primary-80: "#bfdbd8"
+  ha-color-primary-90: "#d2efec"
+  ha-color-primary-95: "#defaf8"
+  ha-color-neutral-05: "#0d1615"
+  ha-color-neutral-10: "#192222"
+  ha-color-neutral-20: "#2e3938"
+  ha-color-neutral-30: "#424d4c"
+  ha-color-neutral-40: "#566160"
+  ha-color-neutral-50: "#717d7c"
+  ha-color-neutral-60: "#8f9b9a"
+  ha-color-neutral-70: "#a8b4b3"
+  ha-color-neutral-80: "#c2cfce"
+  ha-color-neutral-90: "#dce9e8"
+  ha-color-neutral-95: "#e9f6f5"
+  ha-color-focus: "var(--primary-color)"
+
+  # The petrol board behind dashboards, a lower mint sheet behind settings pages
+  lovelace-background: "var(--paper-layers-fibre-board), var(--paper-layers-board)"
+  primary-background-color: "var(--paper-layers-under)"
+  secondary-background-color: "#e3eee8"
+
+  # Cards: one sheet of card stock each, no outline, edge only from the shadow
+  card-background-color: "var(--paper-layers-sheet)"
+  ha-card-background: "var(--paper-layers-fibre), var(--paper-layers-sheet)"
+  ha-card-border-width: "0px"
+  ha-card-border-color: "transparent"
+  ha-card-border-radius: "18px"
+  ha-card-box-shadow: "var(--paper-layers-shadow)"
+  ha-badge-border-radius: "9999px"
+  ha-tile-icon-border-radius: "50%"
+  ha-section-grid-row-gap: "12px"
+  ha-section-grid-column-gap: "12px"
+  divider-color: "#c7d5cf"
+  ha-color-border-neutral-quiet: "#c7d5cf"
+  # Section headings sit on the petrol board, not on a card
+  ha-heading-card-title-color: "var(--paper-layers-sheet)"
+  ha-heading-card-subtitle-color: "#c6dcd4"
+  ha-heading-card-title-font-weight: "600"
+
+  # Dialogs: a sheet laid over the page
+  ha-dialog-border-radius: "22px"
+  ha-dialog-surface-background: "var(--paper-layers-sheet)"
+  mdc-theme-surface: "var(--paper-layers-sheet)"
+  mdc-dialog-scrim-color: "rgba(3,32,32,.45)"
+  paper-dialog-background-color: "var(--paper-layers-sheet)"
+
+  # Toolbar and sidebar as plain sheets
+  app-header-background-color: "var(--paper-layers-sheet)"
+  app-header-text-color: "var(--paper-layers-ink)"
+  app-header-border-bottom: "1px solid #c7d5cf"
+  sidebar-background-color: "var(--paper-layers-sheet)"
+  sidebar-text-color: "var(--paper-layers-ink)"
+  sidebar-icon-color: "#3d5f5f"
+  sidebar-selected-text-color: "var(--paper-layers-ink)"
+  sidebar-selected-icon-color: "#106561"
+  sidebar-menu-button-text-color: "var(--paper-layers-ink)"
+
+  # Switches: petrol track when on, a paper thumb lying on top
+  ha-switch-checked-background-color: "#106561"
+  ha-switch-checked-background-color-hover: "#0c534f"
+  ha-switch-checked-border-color: "#106561"
+  ha-switch-checked-border-color-hover: "#0c534f"
+  ha-switch-checked-thumb-background-color: "var(--paper-layers-sheet-up)"
+  ha-switch-checked-thumb-background-color-hover: "var(--paper-layers-sheet-up)"
+  ha-switch-checked-thumb-border-color: "transparent"
+  ha-switch-checked-thumb-border-color-hover: "transparent"
+  ha-switch-background-color: "#c7d5cf"
+  ha-switch-background-color-hover: "#bccbc5"
+  ha-switch-border-color: "#607a7a"
+  ha-switch-thumb-background-color: "var(--paper-layers-sheet-up)"
+  ha-switch-thumb-background-color-hover: "var(--paper-layers-sheet-up)"
+  ha-switch-thumb-border-color: "transparent"
+  ha-switch-thumb-border-color-hover: "transparent"
+  ha-switch-thumb-box-shadow: "0 1px 0 rgba(3,32,32,.25), 0 1px 3px rgba(3,32,32,.30)"
+  switch-checked-button-color: "var(--paper-layers-sheet-up)"
+  switch-checked-track-color: "#106561"
+  switch-unchecked-button-color: "var(--paper-layers-sheet-up)"
+  switch-unchecked-track-color: "#c7d5cf"
+
+  # Inputs and forms: a slightly lower sheet inside the card
+  ha-color-form-background: "#e1ece5"
+  ha-color-form-background-hover: "#d8e5dd"
+  input-fill-color: "#e1ece5"
+  mdc-text-field-fill-color: "#e1ece5"
+  mdc-select-fill-color: "#e1ece5"
+  input-idle-line-color: "#607a7a"
+  input-hover-line-color: "var(--primary-color)"
+  input-outlined-idle-border-color: "#607a7a"
+  code-editor-background-color: "#e1ece5"
+  markdown-code-background-color: "#e1ece5"
+
+  # Sliders, gauges and charts
+  slider-color: "#106561"
+  slider-track-color: "#c7d5cf"
+  control-slider-color: "#106561"
+  control-circular-slider-color: "var(--paper-layers-coral)"
+  info-color: "#106561"
+  graph-color-1: "#106561"
+  graph-color-2: "#e7ac35"
+  graph-color-3: "#d86845"
+  graph-color-4: "#5c9f8f"
+  graph-color-5: "#3d5f5f"
+
+  # Typography: a friendly rounded sans from the system
+  ha-font-family-body: "ui-rounded, 'SF Pro Rounded', Nunito, 'Varela Round', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+  ha-font-family-heading: "var(--paper-layers-numbers)"
+  ha-card-header-font-family: "var(--paper-layers-numbers)"
+  ha-font-family-code: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace"
+  code-font-family: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace"
+
+  # States: mustard for light, coral for heat and sound, petrol for everything else that is on
+  state-icon-color: "#106561"
+  state-inactive-color: "#607a7a"
+  state-active-color: "#106561"
+  state-light-active-color: "var(--paper-layers-mustard)"
+  state-switch-active-color: "#106561"
+  state-fan-active-color: "#106561"
+  state-cover-active-color: "#106561"
+  state-media_player-active-color: "var(--paper-layers-coral)"
+  state-climate-heat-color: "var(--paper-layers-coral)"
+  state-climate-cool-color: "#2f7a8f"
+  state-climate-auto-color: "#106561"
+  state-climate-off-color: "#7f9494"
+  # Messages as text: darker values that keep 4.5:1 on the mint sheet
+  success-color: "#256d4c"
+  warning-color: "#8a5619"
+  error-color: "#ae3f2c"
+  # Palette for state icons, in card stock colours
+  red-color: "#c9553a"
+  pink-color: "#c75a6a"
+  purple-color: "#7a5a8f"
+  deep-purple-color: "#6a5a9a"
+  indigo-color: "#4a5f9a"
+  blue-color: "#2f6a8f"
+  light-blue-color: "#2f7a8f"
+  cyan-color: "#1f7f86"
+  teal-color: "#106561"
+  green-color: "#2e7a55"
+  light-green-color: "#4f8a4a"
+  lime-color: "#7a8a2a"
+  yellow-color: "#e7ac35"
+  amber-color: "#e7ac35"
+  orange-color: "#d86845"
+  deep-orange-color: "#d86845"
+  brown-color: "#8a6448"
+  grey-color: "#607a7a"
+  # Weather icons cut from paper
+  weather-icon-sun-color: "#e7ac35"
+  weather-icon-moon-color: "#e7ac35"
+  weather-icon-rain-color: "#2f7a8f"
+  weather-icon-cloud-front-color: "#fbfdfb"
+  weather-icon-cloud-back-color: "#b5c9c2"
+
+  # Optional, card-mod 4.x: tiles of switchable entities that are on lie one layer higher, their icon becomes a
+  # solid paper dot. The domain list matters: the tile card marks any entity with a value as active, sensors included.
+  card-mod-card: |
+    ha-card.active:has(ha-tile-icon:is([data-domain=light], [data-domain=switch], [data-domain=fan], [data-domain=media_player], [data-domain=climate], [data-domain=input_boolean], [data-domain=humidifier], [data-domain=water_heater], [data-domain=vacuum], [data-domain=remote], [data-domain=siren], [data-domain=automation], [data-domain=script], [data-domain=cover])) {
+      box-shadow: var(--paper-layers-shadow-up);
+      transform: translateY(-2px);
+      --ha-card-background: var(--paper-layers-fibre), var(--paper-layers-sheet-up);
+    }
+    /* The frontend draws an icon disc only for some tiles, so the paper dot is painted on the icon host; 2px smaller, so the focus ring stays free */
+    ha-card.active:has(ha-tile-icon:is([data-domain=light], [data-domain=switch], [data-domain=fan], [data-domain=media_player], [data-domain=climate], [data-domain=input_boolean], [data-domain=humidifier], [data-domain=water_heater], [data-domain=vacuum], [data-domain=remote], [data-domain=siren], [data-domain=automation], [data-domain=script], [data-domain=cover])) ha-tile-icon {
+      --tile-icon-opacity: 0;
+      --tile-icon-hover-opacity: 0;
+      background: radial-gradient(circle closest-side, var(--tile-icon-color) calc(100% - 8.5px), transparent calc(100% - 8px));
+    }
+    ha-card.active:has(ha-tile-icon:is([data-domain=light], [data-domain=switch], [data-domain=fan], [data-domain=media_player], [data-domain=climate], [data-domain=input_boolean], [data-domain=humidifier], [data-domain=water_heater], [data-domain=vacuum], [data-domain=remote], [data-domain=siren], [data-domain=automation], [data-domain=script], [data-domain=cover])) ha-tile-icon [slot=icon] {
+      color: var(--paper-layers-dot-glyph-petrol);
+    }
+    ha-card.active:has(ha-tile-icon:is([data-domain=light], [data-domain=switch], [data-domain=fan], [data-domain=media_player], [data-domain=climate], [data-domain=input_boolean], [data-domain=humidifier], [data-domain=water_heater], [data-domain=vacuum], [data-domain=remote], [data-domain=siren], [data-domain=automation], [data-domain=script], [data-domain=cover])) ha-tile-icon:is([data-domain=light], [data-domain=media_player]) [slot=icon] {
+      color: var(--paper-layers-dot-glyph);
+    }
+    :host(hui-heading-card) .title .heading { font-family: var(--paper-layers-numbers); }
+  # Optional, card-mod 4.x: the dashboard title in the rounded heading font
+  card-mod-root: |
+    .main-title { font-family: var(--paper-layers-numbers); font-weight: 600; }
+  # Optional, card-mod 4.x: the sidebar as its own sheet on the board, the selected entry raised
+  card-mod-sidebar: |
+    :host {
+      margin: 10px;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      border-radius: 18px;
+      overflow: hidden;
+      /* the frontend's own :host rule wins over card-mod at equal specificity, so set the variable it reads */
+      --sidebar-background-color: var(--paper-layers-sheet);
+      background-image: var(--paper-layers-fibre);
+      box-shadow: var(--paper-layers-shadow);
+      font-family: var(--ha-font-family-body);
+    }
+    .menu { border-bottom: 0 !important; background: transparent !important; }
+    ha-list-item-button { border-radius: 12px; }
+    ha-list-item-button.selected {
+      background: var(--paper-layers-mint);
+      box-shadow: var(--paper-layers-shadow);
+    }
+    ha-list-item-button.selected::before { opacity: 0; }
+
+  modes:
+    light: {}
+    dark:
+      paper-layers-board: "#04282a"
+      paper-layers-under: "#0e2c2c"
+      paper-layers-sheet: "#203d3a"
+      paper-layers-sheet-up: "#284844"
+      paper-layers-ink: "#ddece3"
+      paper-layers-mint: "#345f55"
+      paper-layers-mustard: "#efc05b"
+      paper-layers-coral: "#ed896a"
+      paper-layers-fibre: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter id=%27d%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 0 0 0 0 0 .12 0 0 0 0 .12 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Cfilter id=%27h%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23d)%27 opacity=%270.3%27/%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23h)%27 opacity=%270.15%27/%3E%3C/svg%3E")'
+      paper-layers-fibre-board: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter id=%27d%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 0 0 0 0 0 .12 0 0 0 0 .12 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Cfilter id=%27h%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23d)%27 opacity=%270.45%27/%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23h)%27 opacity=%270.2%27/%3E%3C/svg%3E")'
+      paper-layers-dot-glyph: "#04282a"
+      paper-layers-dot-glyph-petrol: "#04282a"
+      paper-layers-shadow: "inset 0 1px 0 rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.45), 0 2px 4px rgba(0,0,0,.45)"
+      paper-layers-shadow-up: "inset 0 1px 0 rgba(255,255,255,.10), 0 2px 0 rgba(0,0,0,.35), 0 4px 7px rgba(0,0,0,.50), 0 10px 16px -6px rgba(0,0,0,.50)"
+      primary-color: "#76ceba"
+      accent-color: "#76ceba"
+      text-primary-color: "#04282a"
+      primary-text-color: "#ddece3"
+      secondary-text-color: "#acc0b8"
+      disabled-text-color: "#6f8a86"
+      rgb-primary-text-color: "221, 236, 227"
+      secondary-background-color: "#15312f"
+      divider-color: "#324a48"
+      ha-color-border-neutral-quiet: "#324a48"
+      ha-heading-card-title-color: "#ddece3"
+      ha-heading-card-subtitle-color: "#acc0b8"
+      mdc-dialog-scrim-color: "rgba(0,0,0,.55)"
+      app-header-border-bottom: "1px solid #324a48"
+      sidebar-icon-color: "#acc0b8"
+      # Lighter mint: the selected entry also takes this colour for its text, on the mint pill
+      sidebar-selected-icon-color: "#9fe0d0"
+      ha-switch-checked-background-color: "#3f9a88"
+      ha-switch-checked-background-color-hover: "#4aa794"
+      ha-switch-checked-border-color: "#76ceba"
+      ha-switch-checked-border-color-hover: "#76ceba"
+      ha-switch-background-color: "#324a48"
+      ha-switch-background-color-hover: "#3a5451"
+      ha-switch-border-color: "#7e9896"
+      ha-switch-thumb-box-shadow: "0 1px 0 rgba(0,0,0,.40), 0 1px 3px rgba(0,0,0,.50)"
+      switch-checked-track-color: "#3f9a88"
+      switch-unchecked-track-color: "#324a48"
+      ha-color-form-background: "#183532"
+      ha-color-form-background-hover: "#1d3b38"
+      input-fill-color: "#183532"
+      mdc-text-field-fill-color: "#183532"
+      mdc-select-fill-color: "#183532"
+      input-idle-line-color: "#7e9896"
+      input-outlined-idle-border-color: "#7e9896"
+      code-editor-background-color: "#183532"
+      markdown-code-background-color: "#183532"
+      slider-color: "#76ceba"
+      slider-track-color: "#324a48"
+      control-slider-color: "#76ceba"
+      info-color: "#76ceba"
+      graph-color-1: "#76ceba"
+      graph-color-2: "#efc05b"
+      graph-color-3: "#ed896a"
+      graph-color-4: "#9fc7bb"
+      graph-color-5: "#acc0b8"
+      state-icon-color: "#76ceba"
+      state-inactive-color: "#849f9c"
+      state-active-color: "#76ceba"
+      state-switch-active-color: "#76ceba"
+      state-fan-active-color: "#76ceba"
+      state-cover-active-color: "#76ceba"
+      state-climate-cool-color: "#7ab9cf"
+      state-climate-auto-color: "#76ceba"
+      state-climate-off-color: "#6f8a86"
+      success-color: "#82d2a8"
+      warning-color: "#f2b966"
+      error-color: "#f09080"
+      red-color: "#ed8a70"
+      pink-color: "#e69aa6"
+      purple-color: "#b9a0cf"
+      deep-purple-color: "#ada2d6"
+      indigo-color: "#9eaede"
+      blue-color: "#8ab8d6"
+      light-blue-color: "#7ab9cf"
+      cyan-color: "#6fc3c6"
+      teal-color: "#76ceba"
+      green-color: "#82d2a8"
+      light-green-color: "#a6d39a"
+      lime-color: "#c9d27a"
+      yellow-color: "#efc05b"
+      amber-color: "#efc05b"
+      orange-color: "#ed896a"
+      deep-orange-color: "#ed896a"
+      brown-color: "#c4a088"
+      grey-color: "#849f9c"
+      weather-icon-sun-color: "#efc05b"
+      weather-icon-moon-color: "#efc05b"
+      weather-icon-rain-color: "#7ab9cf"
+      weather-icon-cloud-front-color: "#d7e6df"
+      weather-icon-cloud-back-color: "#7e9896"

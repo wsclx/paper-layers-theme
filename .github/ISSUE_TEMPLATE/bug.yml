@@ -1,0 +1,46 @@
+name: Something looks wrong
+description: A card, page or dialog does not look right with Paper Layers.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What looks wrong?
+      description: Which page or card, and what did you expect instead?
+    validations:
+      required: true
+  - type: input
+    id: ha
+    attributes:
+      label: Home Assistant version
+      placeholder: "2026.11.2"
+    validations:
+      required: true
+  - type: input
+    id: cardmod
+    attributes:
+      label: card-mod version (or "not installed")
+      placeholder: "4.2.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options: [Light, Dark, Both]
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser or app
+      placeholder: "Safari on iOS, Companion app, Chrome on desktop …"
+    validations:
+      required: true
+  - type: textarea
+    id: shot
+    attributes:
+      label: Screenshot
+      description: Please remove anything personal (names, addresses, camera images) before uploading.
+    validations:
+      required: true
