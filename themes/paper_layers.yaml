@@ -7,7 +7,8 @@
 # Works without any add-on: card stock colours, the fine paper fibre (an embedded SVG, no image files), short layer
 # shadows, rounded sheets, paper switch thumbs and the rounded system font come from plain theme variables.
 # With card-mod 4.x installed (optional), the card-mod-* keys lift tiles of switched-on devices one layer higher,
-# turn their icon into a solid paper dot, float the sidebar as its own sheet and raise the selected sidebar entry.
+# turn their icon into a solid paper dot, float the sidebar as its own sheet with rounded corners and raise the
+# selected sidebar entry.
 # Without card-mod those keys are ignored.
 #
 # Fonts: system fonts only, nothing is downloaded. Safari and the Apple apps use the rounded system font
@@ -23,7 +24,10 @@ Paper Layers:
   paper-layers-sheet-up: "#f2f9f3"
   paper-layers-ink: "#113a3a"
   paper-layers-mint: "#bbe2d3"
+  # Mustard is a surface colour (dots, slider fill, sun); as icon or line colour on the sheet it is too light,
+  # so icons and lines use the darker ochre (4.2:1 on the sheet)
   paper-layers-mustard: "#e7ac35"
+  paper-layers-ochre: "#9c6a10"
   paper-layers-coral: "#d86845"
   # Glyph on the paper dot: ink on mustard and coral dots (light, media), paper on petrol dots
   paper-layers-dot-glyph: "#113a3a"
@@ -71,10 +75,12 @@ Paper Layers:
   # The petrol board behind dashboards, a lower mint sheet behind settings pages
   lovelace-background: "var(--paper-layers-fibre-board), var(--paper-layers-board)"
   primary-background-color: "var(--paper-layers-under)"
+  rgb-primary-background-color: "217, 231, 224"
   secondary-background-color: "#e3eee8"
 
   # Cards: one sheet of card stock each, no outline, edge only from the shadow
   card-background-color: "var(--paper-layers-sheet)"
+  rgb-card-background-color: "236, 245, 237"
   ha-card-background: "var(--paper-layers-fibre), var(--paper-layers-sheet)"
   ha-card-border-width: "0px"
   ha-card-border-color: "transparent"
@@ -101,7 +107,7 @@ Paper Layers:
   # Toolbar and sidebar as plain sheets
   app-header-background-color: "var(--paper-layers-sheet)"
   app-header-text-color: "var(--paper-layers-ink)"
-  app-header-border-bottom: "1px solid #c7d5cf"
+  app-header-border-bottom: "none"
   sidebar-background-color: "var(--paper-layers-sheet)"
   sidebar-text-color: "var(--paper-layers-ink)"
   sidebar-icon-color: "#3d5f5f"
@@ -150,7 +156,7 @@ Paper Layers:
   control-circular-slider-color: "var(--paper-layers-coral)"
   info-color: "#106561"
   graph-color-1: "#106561"
-  graph-color-2: "#e7ac35"
+  graph-color-2: "var(--paper-layers-ochre)"
   graph-color-3: "#d86845"
   graph-color-4: "#5c9f8f"
   graph-color-5: "#3d5f5f"
@@ -166,7 +172,7 @@ Paper Layers:
   state-icon-color: "#106561"
   state-inactive-color: "#607a7a"
   state-active-color: "#106561"
-  state-light-active-color: "var(--paper-layers-mustard)"
+  state-light-active-color: "var(--paper-layers-ochre)"
   state-switch-active-color: "#106561"
   state-fan-active-color: "#106561"
   state-cover-active-color: "#106561"
@@ -192,8 +198,8 @@ Paper Layers:
   green-color: "#2e7a55"
   light-green-color: "#4f8a4a"
   lime-color: "#7a8a2a"
-  yellow-color: "#e7ac35"
-  amber-color: "#e7ac35"
+  yellow-color: "var(--paper-layers-ochre)"
+  amber-color: "var(--paper-layers-ochre)"
   orange-color: "#d86845"
   deep-orange-color: "#d86845"
   brown-color: "#8a6448"
@@ -212,19 +218,19 @@ Paper Layers:
       box-shadow: var(--paper-layers-shadow-up);
       transform: translateY(-2px);
       --ha-card-background: var(--paper-layers-fibre), var(--paper-layers-sheet-up);
+      /* The frontend draws an icon disc only for some tiles, so the paper dot is painted on the icon host;
+         2px smaller than the disc, so the frontend's focus ring stays free */
+      & ha-tile-icon {
+        --tile-icon-opacity: 0;
+        --tile-icon-hover-opacity: 0;
+        background: radial-gradient(circle closest-side, var(--paper-layers-dot, var(--tile-icon-color)) calc(100% - 8.5px), transparent calc(100% - 8px));
+      }
+      & ha-tile-icon [slot=icon] { color: var(--paper-layers-dot-glyph-petrol); }
+      & ha-tile-icon:is([data-domain=light], [data-domain=media_player]) [slot=icon] { color: var(--paper-layers-dot-glyph); }
+      /* Lights without a colour of their own get a mustard dot (the ochre icon colour is too dark for a dot) */
+      &:not([style*="rgb("]) ha-tile-icon[data-domain=light] { --paper-layers-dot: var(--paper-layers-mustard); }
     }
-    /* The frontend draws an icon disc only for some tiles, so the paper dot is painted on the icon host; 2px smaller, so the focus ring stays free */
-    ha-card.active:has(ha-tile-icon:is([data-domain=light], [data-domain=switch], [data-domain=fan], [data-domain=media_player], [data-domain=climate], [data-domain=input_boolean], [data-domain=humidifier], [data-domain=water_heater], [data-domain=vacuum], [data-domain=remote], [data-domain=siren], [data-domain=automation], [data-domain=script], [data-domain=cover])) ha-tile-icon {
-      --tile-icon-opacity: 0;
-      --tile-icon-hover-opacity: 0;
-      background: radial-gradient(circle closest-side, var(--tile-icon-color) calc(100% - 8.5px), transparent calc(100% - 8px));
-    }
-    ha-card.active:has(ha-tile-icon:is([data-domain=light], [data-domain=switch], [data-domain=fan], [data-domain=media_player], [data-domain=climate], [data-domain=input_boolean], [data-domain=humidifier], [data-domain=water_heater], [data-domain=vacuum], [data-domain=remote], [data-domain=siren], [data-domain=automation], [data-domain=script], [data-domain=cover])) ha-tile-icon [slot=icon] {
-      color: var(--paper-layers-dot-glyph-petrol);
-    }
-    ha-card.active:has(ha-tile-icon:is([data-domain=light], [data-domain=switch], [data-domain=fan], [data-domain=media_player], [data-domain=climate], [data-domain=input_boolean], [data-domain=humidifier], [data-domain=water_heater], [data-domain=vacuum], [data-domain=remote], [data-domain=siren], [data-domain=automation], [data-domain=script], [data-domain=cover])) ha-tile-icon:is([data-domain=light], [data-domain=media_player]) [slot=icon] {
-      color: var(--paper-layers-dot-glyph);
-    }
+    @media (prefers-reduced-motion: reduce) { ha-card { transition: none; } }
     :host(hui-heading-card) .title .heading { font-family: var(--paper-layers-numbers); }
   # Optional, card-mod 4.x: the dashboard title in the rounded heading font
   card-mod-root: |
@@ -257,17 +263,19 @@ Paper Layers:
       paper-layers-board: "#04282a"
       paper-layers-under: "#0e2c2c"
       paper-layers-sheet: "#203d3a"
-      paper-layers-sheet-up: "#284844"
+      # In the dark the shadow hardly shows on the board, so a lifted sheet is also lighter
+      paper-layers-sheet-up: "#2e524d"
       paper-layers-ink: "#ddece3"
       paper-layers-mint: "#345f55"
       paper-layers-mustard: "#efc05b"
+      paper-layers-ochre: "#efc05b"
       paper-layers-coral: "#ed896a"
       paper-layers-fibre: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter id=%27d%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 0 0 0 0 0 .12 0 0 0 0 .12 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Cfilter id=%27h%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23d)%27 opacity=%270.3%27/%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23h)%27 opacity=%270.15%27/%3E%3C/svg%3E")'
       paper-layers-fibre-board: 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27200%27 height=%27200%27%3E%3Cfilter id=%27d%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 0 0 0 0 0 .12 0 0 0 0 .12 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Cfilter id=%27h%27 x=%270%27 y=%270%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%27.65%27 numOctaves=%273%27 seed=%2711%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix values=%270 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -.86%27/%3E%3C/filter%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23d)%27 opacity=%270.45%27/%3E%3Crect width=%27200%27 height=%27200%27 filter=%27url(%23h)%27 opacity=%270.2%27/%3E%3C/svg%3E")'
       paper-layers-dot-glyph: "#04282a"
       paper-layers-dot-glyph-petrol: "#04282a"
       paper-layers-shadow: "inset 0 1px 0 rgba(255,255,255,.07), 0 1px 0 rgba(0,0,0,.45), 0 2px 4px rgba(0,0,0,.45)"
-      paper-layers-shadow-up: "inset 0 1px 0 rgba(255,255,255,.10), 0 2px 0 rgba(0,0,0,.35), 0 4px 7px rgba(0,0,0,.50), 0 10px 16px -6px rgba(0,0,0,.50)"
+      paper-layers-shadow-up: "inset 0 1px 0 rgba(255,255,255,.14), 0 2px 0 rgba(0,0,0,.35), 0 4px 7px rgba(0,0,0,.50), 0 10px 16px -6px rgba(0,0,0,.50)"
       primary-color: "#76ceba"
       accent-color: "#76ceba"
       text-primary-color: "#04282a"
@@ -276,12 +284,13 @@ Paper Layers:
       disabled-text-color: "#6f8a86"
       rgb-primary-text-color: "221, 236, 227"
       secondary-background-color: "#15312f"
+      rgb-card-background-color: "32, 61, 58"
+      rgb-primary-background-color: "14, 44, 44"
       divider-color: "#324a48"
       ha-color-border-neutral-quiet: "#324a48"
       ha-heading-card-title-color: "#ddece3"
       ha-heading-card-subtitle-color: "#acc0b8"
       mdc-dialog-scrim-color: "rgba(0,0,0,.55)"
-      app-header-border-bottom: "1px solid #324a48"
       sidebar-icon-color: "#acc0b8"
       # Lighter mint: the selected entry also takes this colour for its text, on the mint pill
       sidebar-selected-icon-color: "#9fe0d0"
