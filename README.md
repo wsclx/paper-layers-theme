@@ -20,7 +20,7 @@ A cut-paper theme for Home Assistant. Every surface is a sheet of matte card sto
 - **Warm accents with a job.** Mustard for lights, coral for heating and media, petrol for every other device that is on, for buttons and for selection. In light mode mustard is a surface colour only (paper dots, sliders, the sun); icons and chart lines in that hue use a darker ochre so they keep 3:1 on the mint sheet. Error, warning and success texts use darker variants that keep 4.5:1.
 - **Paper switches.** A paper thumb lying on a petrol track, with a short shadow of its own.
 - **Rounded system font.** Safari and the Home Assistant apps on Apple devices use the rounded system font for everything. Other browsers use the system UI font; with card-mod, section headings and the dashboard title switch to Arial Rounded where it is installed. Nothing is downloaded.
-- **Optional extras with card-mod:** tiles of switched-on devices are lifted one layer higher and their icon becomes a solid paper dot; the sidebar floats as its own sheet with rounded corners and the selected entry raised; section headings and the dashboard title use the rounded heading font.
+- **Optional extras with card-mod:** tiles of switched-on devices are lifted one layer higher and their icon becomes a solid paper dot; tiles get a clear keyboard focus ring; the sidebar floats as its own sheet with rounded corners and the selected entry raised; section headings and the dashboard title use the rounded heading font.
 
 Without card-mod the theme still works: sheets, colours, shadows, fibre, switches and headings on the board stay the same; tiles of switched-on devices show their state through the icon colour instead of being lifted, and the sidebar is a flat sheet.
 

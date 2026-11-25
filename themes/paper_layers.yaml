@@ -227,9 +227,14 @@ Paper Layers:
       }
       & ha-tile-icon [slot=icon] { color: var(--paper-layers-dot-glyph-petrol); }
       & ha-tile-icon:is([data-domain=light], [data-domain=media_player]) [slot=icon] { color: var(--paper-layers-dot-glyph); }
-      /* Lights without a colour of their own get a mustard dot (the ochre icon colour is too dark for a dot) */
-      &:not([style*="rgb("]) ha-tile-icon[data-domain=light] { --paper-layers-dot: var(--paper-layers-mustard); }
+      /* Lights without a colour of their own (the tile then sets its colour from the theme variable, lights with a
+         colour set it as a hex value) get a mustard dot; the ochre icon colour is too dark for a dot */
+      &[style*="var(--state-light"] ha-tile-icon[data-domain=light] { --paper-layers-dot: var(--paper-layers-mustard); }
+      /* Keyboard focus: the frontend draws it as box-shadow, which the lift above replaces; ring inside the sheet */
+      &:has(ha-tile-container[focused]) { box-shadow: var(--paper-layers-shadow-up), inset 0 0 0 2px var(--ha-color-focus) !important; }
     }
+    /* Keyboard focus on resting tiles: the frontend's own ring is 1px in the state colour; 2px inside the sheet */
+    ha-card:has(ha-tile-container[focused]) { box-shadow: var(--paper-layers-shadow), inset 0 0 0 2px var(--ha-color-focus) !important; }
     @media (prefers-reduced-motion: reduce) { ha-card { transition: none; } }
     :host(hui-heading-card) .title .heading { font-family: var(--paper-layers-numbers); }
   # Optional, card-mod 4.x: the dashboard title in the rounded heading font
